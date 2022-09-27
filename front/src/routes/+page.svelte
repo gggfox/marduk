@@ -1,7 +1,5 @@
 <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
-	import Header from '$lib/header/Header.svelte';
-import { io } from 'socket.io-client';
+	import { io } from 'socket.io-client';
 	import { onMount } from 'svelte';
 
 	const socket = io('http://localhost:3003')

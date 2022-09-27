@@ -1,5 +1,8 @@
 <script lang='ts'>
     import { onMount } from 'svelte';
+    import { io } from 'socket.io-client';
+
+    const socket = io('http://localhost:3003')
 
     let canvas: HTMLCanvasElement;
 
@@ -7,15 +10,17 @@
     let playerY = 50;
     let playerSpeedX = 0;
     let playerSpeedY = 0;
+
     onMount(() => {
         const context = canvas.getContext('2d')
 
         function render() {
             if (context) {
-            if(Math.abs(playerSpeedX) >= 10 && Math.abs(playerSpeedY) >= 10) {
+            if(playerSpeedX !== 0 && playerSpeedY !== 0) {
                 const cos45 = 0.7; 
                 playerSpeedX *= cos45;
                 playerSpeedY *= cos45;
+
             }
             playerX += playerSpeedX;
             playerY += playerSpeedY;
@@ -58,7 +63,7 @@ function handleKeyPress(event: KeyboardEvent, speed: number) {
   }
 
   const handleKeyPressUp = (event: KeyboardEvent) => handleKeyPress(event, 0);
-  const handleKeyPressDown = (event: KeyboardEvent) => handleKeyPress(event, 15);
+  const handleKeyPressDown = (event: KeyboardEvent) => handleKeyPress(event, 10);
 
 </script>
 
