@@ -1,0 +1,35 @@
+version: '3'
+services:
+  database:
+    image: postgres:14.1-alpine
+    container_name: db
+    ports:
+     - "4000:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db-data
+    restart: always
+    volumes: 
+     - db-data:/var/lib/postgresql/data/
+
+  service-users:
+    image: users
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile.dev
+    container_name: users
+    volumes:
+     - /tmp/services/users/npm-cache:/root/.npm:z # Shares npm chache from host to the container
+     - ./services/users:/usr/src/app:z # Shares source code directly from host to the container, aka live reload
+    ports:
+     - "4001:3100"
+    environment:
+      - PORT=3100
+      - NODE_ENV=development
+    restart: "no"
+
+
+volumes:
+  db-data:
+    driver: local
