@@ -25,3 +25,9 @@ jobs:
           ls -a 
           echo  2. Is node installed?
           node -v
+          echo 3. Is python installed?
+          python -v
+          echo 4. docker version 
+          docker -v
+          echo 5. Is terraform installed?
+          terraform -v
